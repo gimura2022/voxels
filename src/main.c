@@ -126,26 +126,22 @@ int main() {
 
     mat4 projection;
     glm_perspective_default((float)width/(float)height, projection);
-    //glm_mat4_identity(projection);
     GLint projection_location = glGetUniformLocation(shader_program, "projection");
 
-    vec4 translation = {-player_pos[0], -player_pos[1], -player_pos[2], 0.0};
+    vec4 translation = {0.0f, 0.0f, -1.0f, 0.0f};
     mat4 model;
     glm_mat4_identity(model);
     glm_translate(model, translation);
-    //vec3 vec = {0.0, 0.0, 0.0};
-    //float angle = t * M_PI / 6;
-    //glm_rotate(view, angle, vec);
     GLint model_location = glGetUniformLocation(shader_program, "model");
 
-    //vec4 translation = {-player_pos[0], -player_pos[1], -player_pos[2], 0.0};
     mat4 view;
     glm_mat4_identity(view);
-    glm_translate(view, translation);
-    vec3 vec = {1.0, 0.0, 0.0};
-    glm_rotate(view, ynpos, vec);
-    vec3 vec2 = {0.0, 1.0, 0.0};
-    glm_rotate(view, xnpos, vec2);
+    // vec3 vec = {1.0, 0.0, 0.0};
+    // glm_rotate(view, ynpos, vec);
+    // vec3 vec2 = {0.0, 1.0, 0.0};
+    // glm_rotate(view, xnpos, vec2);
+    vec3 vec = {ynpos, xnpos, 0.0};
+    glm_rotate(view, sqrt(xnpos * xnpos + ynpos * ynpos), vec);
     GLint view_location = glGetUniformLocation(shader_program, "view");
 
     glUseProgram(shader_program);
