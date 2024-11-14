@@ -7,8 +7,6 @@
 #include "../include/shader.h"
 #include "../include/logs.h"
 
-// int wasd = 0b0000;  // dasw
-
 void swapBuffer(Window *window) {
   glfwSwapBuffers(window->window);
 }
@@ -33,23 +31,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
   }
-  // } else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-  //   wasd = wasd | 0b0001;
-  // } else if (key == GLFW_KEY_W && action == GLFW_RELEASE) {
-  //   wasd = wasd & 0b1110;
-  // } else if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-  //   wasd = wasd | 0b0010;
-  // } else if (key == GLFW_KEY_S && action == GLFW_RELEASE) {
-  //   wasd = wasd & 0b1101;
-  // } else if (key == GLFW_KEY_A && action == GLFW_PRESS) {
-  //   wasd = wasd | 0b0100;
-  // } else if (key == GLFW_KEY_A && action == GLFW_RELEASE) {
-  //   wasd = wasd & 0b1011;
-  // } else if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-  //   wasd = wasd | 0b1000;
-  // } else if (key == GLFW_KEY_D && action == GLFW_RELEASE) {
-  //   wasd = wasd & 0b0111;
-  // }
 }
 
 void resize_callback(GLFWwindow* window, int new_width, int new_height) {

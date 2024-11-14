@@ -7,6 +7,7 @@
 #include "../include/window.h"
 #include "../include/shader.h"
 #include "../include/logs.h"
+#include "../include/player.h"
 
 #define M_PI 3.14159265358979323846
 
@@ -93,8 +94,12 @@ int main() {
 
   info("Программа была полностью инициализирована. Запущен игровой цикл");
 
-  // float player_pos[3] = {0.0f, 0.0f, 5.0f};
-  // float player_speed = 0.1f;
+  Player player = {
+    {0.0f, 0.0f, -5.0f},
+    {0.0f},
+    {0.0f},
+    0.1f,
+  };
   double xpos, ypos = 0.1f;
 
   while (!windowShouldClose(&window)) {
@@ -108,19 +113,8 @@ int main() {
     double ynpos = ypos / height * M_PI - M_PI / 2.0f;
     xnpos *= (double)width / height;
 
-    // if (wasd & 0b0001) {
-    //   player_pos[2] += -player_speed;
-    // }
-    // if (wasd & 0b0010) {
-    //   player_pos[2] += player_speed;
-    // }
-    // if (wasd & 0b0100) {
-    //   player_pos[0] += -player_speed;
-    // }
-    // if (wasd & 0b1000) {
-    //   player_pos[0] += player_speed;
-    // }
-    
+    player_move(&window, &player);
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -128,7 +122,8 @@ int main() {
     glm_perspective_default((float)width/(float)height, projection);
     GLint projection_location = glGetUniformLocation(shader_program, "projection");
 
-    vec4 translation = {0.0f, 0.0f, -1.0f, 0.0f};
+    //vec4 translation = {0.0f, 0.0f, -1.0f, 0.0f};
+    vec4 translation = {player.position.x, -player.position.y, player.position.z, 0.0f};
     mat4 model;
     glm_mat4_identity(model);
     glm_translate(model, translation);
