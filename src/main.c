@@ -110,7 +110,7 @@ int main() {
     {0.0f, 1.0f, -5.0f},
     {0.0f},
     {0.0f},
-    0.1f,
+    3.0f,
   };
 
   Camera camera = {
@@ -132,7 +132,7 @@ int main() {
     int height = window.height;
 
     camera_update(&camera, window.keys, dt);
-    player_move(&player, window.keys, camera.direction);
+    player_move(&player, window.keys, camera.direction, dt);
 
     // RENDER
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
