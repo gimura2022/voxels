@@ -2,7 +2,7 @@
 
 #include <math.h>
 #include <stdbool.h>
-#include "../include/camera.h"
+#include "camera.h"
 
 void camera_update(Camera *camera, bool keys[1024], float dt) {
   int up = keys[GLFW_KEY_UP] - keys[GLFW_KEY_DOWN];

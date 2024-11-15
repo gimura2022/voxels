@@ -4,7 +4,7 @@
 
 #include <GL/glew.h>
 
-#include "../include/logs.h"
+#include "logs.h"
 
 char* read_file(const char *path) {
   FILE *fptr = fopen(path, "r");

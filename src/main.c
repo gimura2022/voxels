@@ -4,11 +4,11 @@
 
 #include <cglm/cglm.h>
 
-#include "../include/window.h"
-#include "../include/shader.h"
-#include "../include/logs.h"
-#include "../include/player.h"
-#include "../include/camera.h"
+#include "window.h"
+#include "shader.h"
+#include "logs.h"
+#include "player.h"
+#include "camera.h"
 
 #define M_PI 3.14159265358979323846
 

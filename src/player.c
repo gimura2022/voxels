@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#include "../include/player.h"
+#include "player.h"
 
 void player_move(Player *player, bool keys[1024], Vec3 dir) {
   int forward = keys[GLFW_KEY_W] - keys[GLFW_KEY_S];

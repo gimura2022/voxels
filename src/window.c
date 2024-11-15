@@ -3,9 +3,9 @@
 
 #include <stdbool.h>
 
-#include "../include/window.h"
-#include "../include/shader.h"
-#include "../include/logs.h"
+#include "window.h"
+#include "shader.h"
+#include "logs.h"
 
 void swapBuffer(Window *window) {
   glfwSwapBuffers(window->window);
