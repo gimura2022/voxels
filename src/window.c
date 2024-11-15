@@ -49,7 +49,8 @@ Window createWindow(int width, int height) {
     NULL,
     width,
     height,
-    false,
+    {false},
+    false
   };
 }
 
