@@ -156,8 +156,10 @@ int main() {
 
     mat4 view;
     glm_mat4_identity(view);
-    vec3 vec = {-camera.direction.y, -camera.direction.x, camera.direction.z};
-    glm_rotate(view, vec3_length(camera.direction), vec);
+    vec3 up = {1.0f, 0.0f, 0.0f};
+    glm_rotate(view, -camera.direction.y, up);
+    vec3 left = {0.0f, 1.0f, 0.0f};
+    glm_rotate(view, -camera.direction.x, left);
     GLint view_location = glGetUniformLocation(shader_program, "view");
 
     glUseProgram(shader_program);
@@ -180,10 +182,10 @@ int main() {
   return 0;
 }
 
-// TODO: fix camera rotation
 // TODO: rotate camera using mouse
 // TODO: render a single cube
 // TODO: render a chunk of cubes
 // TODO: create a mesh for every chunk
 // TODO: a system of loading-unloading chunks depending on the distance from the player
 // TODO: world generation
+// TODO: improve camera rotation (use quaternions O.O)
