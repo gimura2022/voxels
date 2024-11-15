@@ -19,21 +19,25 @@ void getCursorPos(Window *window, double *xpos, double *ypos) {
   glfwGetCursorPos(window->window, xpos, ypos);
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+  Window *my_window = glfwGetWindowUserPointer(window);
+
+  if (key >= 0 && key < 1024) {
+    if (action == GLFW_PRESS) {
+      my_window->keys[key] = true;
+    } else if (action == GLFW_RELEASE) {
+      my_window->keys[key] = false;
+    }
+  }
+
   if (key == GLFW_KEY_Q && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
   } else if (key == GLFW_KEY_P && action == GLFW_PRESS) {
-    Window *my_window = glfwGetWindowUserPointer(window);
     my_window->polygon_mode = !my_window->polygon_mode;
-    if (my_window->polygon_mode) {
-     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    } else {
-     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
   }
 }
 
-void resize_callback(GLFWwindow* window, int new_width, int new_height) {
+static void resize_callback(GLFWwindow* window, int new_width, int new_height) {
   Window *my_window = glfwGetWindowUserPointer(window);
   my_window->width = new_width;
   my_window->height = new_height;
@@ -68,7 +72,15 @@ int initWindow(Window* window) {
 
   glfwGetFramebufferSize(window->window, &window->width, &window->height);
 
-  // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  // glfwSetInputMode(window->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  info("Курсор был выключен");
+
+  if (glfwRawMouseMotionSupported()) {
+    glfwSetInputMode(window->window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+    info("Включен параметр raw mouse motion");
+  } else {
+    warning("Система не поддерживает raw mouse motion");
+  }
 
   glfwMakeContextCurrent(window->window);
   info("Контекст OpenGL был привязан к окну");

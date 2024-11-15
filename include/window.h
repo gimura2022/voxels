@@ -1,11 +1,11 @@
 #include <GLFW/glfw3.h>
-#include <stdbool.h>
 
 #ifndef _window_h
 #define _window_h
 typedef struct {
   GLFWwindow *window;
   int width, height;
+  bool keys[1024];
   bool polygon_mode;
 } Window;
 

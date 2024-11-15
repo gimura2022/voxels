@@ -1,8 +1,4 @@
-#include "window.h"
-
-typedef struct {
-  float x, y, z;
-} Vec3;
+#include "utils.h"
 
 typedef struct {
   Vec3 position;
@@ -11,4 +7,4 @@ typedef struct {
   float speed;
 } Player;
 
-void player_move(Window* window, Player *player);
+void player_move(Player *player, bool keys[1024], Vec3 cameraDirection);
