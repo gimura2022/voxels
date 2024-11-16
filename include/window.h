@@ -1,5 +1,7 @@
 #include <GLFW/glfw3.h>
 
+#include <stdbool.h>
+
 #ifndef _window_h
 #define _window_h
 typedef struct {
