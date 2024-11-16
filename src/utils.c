@@ -1,4 +1,5 @@
 #include <math.h>
+#define _vector_impl
 #include "utils.h"
 
 float vec3_length(Vec3 v) {
@@ -21,3 +22,14 @@ Vec3 vec3_norm(Vec3 v) {
   float length = vec3_length(v);
   return vec3_divf(v, length);
 }
+
+void print_mat4(mat4 mat) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) printf("%f ", mat[i][j]);
+    printf("\n");
+  }
+}
+
+VectorImpl(float, FloatVector)
+VectorImpl(unsigned int, UnsignedIntVector)
+

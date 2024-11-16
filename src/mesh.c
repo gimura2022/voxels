@@ -1,7 +1,5 @@
-#define _vector_impl
-#include "mesh.h"
-
 #include <string.h>
+#include "mesh.h"
 
 #define FloatVector_rgb(r, g, b)\
 FloatVector_append(&mesh.vertices, 0.0);\
@@ -13,9 +11,6 @@ FloatVector_append(&mesh.vertices, x);\
 FloatVector_append(&mesh.vertices, y);\
 FloatVector_append(&mesh.vertices, z);\
 FloatVector_rgb(0.0, 0.9, 0.0)
-
-VectorImpl(float, FloatVector)
-VectorImpl(unsigned int, UnsignedIntVector)
 
 Mesh chunk_genmesh(Chunk chunk) {
   Mesh mesh;

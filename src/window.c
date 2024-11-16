@@ -1,6 +1,4 @@
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
 #include <stdbool.h>
 
 #include "window.h"
@@ -85,13 +83,6 @@ int initWindow(Window* window) {
 
   glfwMakeContextCurrent(window->window);
   info("Контекст OpenGL был привязан к окну");
-
-  if (!glewInit()) {
-    error("Не удалось инициализировать GLEW");
-    glfwTerminate();
-    return -1;
-  }
-  info("GLEW был инициализирован");
 
   glfwSetKeyCallback(window->window, key_callback);
   info("Функция key_callback отлавливает пользовательский ввод");
