@@ -4,8 +4,8 @@
 #ifndef _mesh
 #define _mesh
 typedef struct {
-  FloatVector vertices;
-  UnsignedIntVector indices;
+	FloatVector vertices;
+	UnsignedIntVector indices;
 } Mesh;
 
 Mesh chunk_genmesh(Chunk chunk);
