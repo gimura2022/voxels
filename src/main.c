@@ -3,36 +3,16 @@
 #include <GLFW/glfw3.h>
 
 #include <cglm/cglm.h>
+#include <string.h>
 
 #include "window.h"
 #include "shader.h"
 #include "logs.h"
 #include "player.h"
 #include "camera.h"
+#include "chunk.h"
 
 #define M_PI 3.14159265358979323846
-
-GLfloat vertices[] = {
-   0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, // Верхний правый угол
-   0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // Нижний правый угол
-  -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Нижний левый угол
-  -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f, // Верхний левый угол
-
-  // Plane
-   20.0f, -0.5f,  20.0f, 0.14f, 0.1411f, 0.14f,
-   20.0f, -0.5f, -20.0f, 0.14f, 0.1411f, 0.14f,
-  -20.0f, -0.5f, -20.0f, 0.14f, 0.1411f, 0.14f,
-  -20.0f, -0.5f,  20.0f, 0.14f, 0.1411f, 0.14f,
-};
-
-GLuint indices[] = {
-  0, 1, 2,
-  2, 3, 0,
-
-  // Plane
-  4, 5, 6,
-  6, 7, 4,
-};
 
 void print_mat4(mat4 mat) {
   for (int i = 0; i < 4; i++) {
@@ -76,6 +56,12 @@ int main() {
   }
   info("Окно было инициализировано");
 
+  Chunk chunk = chunk_init();
+  chunk_worldgen(chunk);
+  Mesh mesh = chunk_genmesh(chunk);
+  FloatVector *vertices = &mesh.vertices;
+  UnsignedIntVector *indices = &mesh.indices;
+
   GLuint shader_program = create_shader();
 
   // WARNING: A DUNGER STARTS!
@@ -89,10 +75,10 @@ int main() {
 
   glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices->capacity * sizeof(float), vertices->data, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->capacity * sizeof(float), indices->data, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
@@ -101,6 +87,9 @@ int main() {
     glEnableVertexAttribArray(1);
   glBindVertexArray(0);
   // WARNING: THE DUNGER ENDS!
+
+  mesh_free(mesh);
+  chunk_free(chunk);
 
   glViewport(0, 0, window.width, window.height);
 
@@ -168,7 +157,7 @@ int main() {
     glUniformMatrix4fv(model_location, 1, GL_FALSE, model[0]);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0); // With EBO
+    glDrawElements(GL_TRIANGLES, mesh.indices.size, GL_UNSIGNED_INT, 0); // With EBO
 
     glBindVertexArray(0);
 
@@ -183,9 +172,9 @@ int main() {
 }
 
 // TODO: rotate camera using mouse
-// TODO: render a single cube
-// TODO: render a chunk of cubes
-// TODO: create a mesh for every chunk
+// TODO: optimize Mesh generating. Сейчас мы генерируем по 4 вершины на каждую грань вокселя. Это 24 вершины на воксель в худшем случае. Но воксель это куб и можно обойтись 8 вершинами
+// TODO: add ability to change color of voxel.
+// TODO: write a blazingly fast greedy mesher xd lol
 // TODO: a system of loading-unloading chunks depending on the distance from the player
 // TODO: world generation
 // TODO: improve camera rotation (use quaternions O.O)
