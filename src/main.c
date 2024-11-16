@@ -11,6 +11,7 @@
 #include "player.h"
 #include "camera.h"
 #include "chunk.h"
+#include "mesh.h"
 
 #define M_PI 3.14159265358979323846
 
